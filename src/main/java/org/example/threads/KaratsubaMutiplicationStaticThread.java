@@ -2,7 +2,7 @@ package org.example.threads;
 
 import org.example.algorithms.Algorithms;
 
-public class RussianMultiplyIterativeThread implements Runnable{
+public class KaratsubaMutiplicationStaticThread implements Runnable{
 
     private int num1;
 
@@ -10,6 +10,6 @@ public class RussianMultiplyIterativeThread implements Runnable{
 
     @Override
     public void run() {
-        Algorithms.russianMultiplicationIterative(num1,num2);
+        Algorithms.karatsubaMultiplicationStatic(num1,num2);
     }
 }

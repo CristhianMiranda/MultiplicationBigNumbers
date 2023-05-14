@@ -1,9 +1,10 @@
 package org.example.algorithms;
 
 public class Algorithms {
-    public static void russianMultiplyIterative (int num1, int num2)
+    public static void russianMultiplicationIterative (int num1, int num2)
     {
-        RussianMultiplyIterative.russianMultiply(num1,num2);
+        RussianMultiplicationIterative.russianMultiply(num1,num2);
     }
+
 
 }

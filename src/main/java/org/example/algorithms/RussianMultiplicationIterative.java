@@ -1,6 +1,6 @@
 package org.example.algorithms;
 
-public class RussianMultiplyIterative {
+public class RussianMultiplicationIterative {
     public static int russianMultiply(int num1, int num2) {
         int result = 0;
         while (num1 > 0) {

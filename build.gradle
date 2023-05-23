@@ -1,0 +1,42 @@
+plugins {
+    id("java")
+}
+
+group = "org.example"
+version = "1.0-SNAPSHOT"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation(platform("org.junit:junit-bom:5.9.1"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    implementation files("${rootDir}/lib/excel/commons-collections4-4.1.jar")
+    implementation files("${rootDir}/lib/excel/poi-3.16.jar")
+    implementation files("${rootDir}/lib/excel/poi-ooxml-3.16.jar")
+    implementation files("${rootDir}/lib/excel/poi-ooxml-schemas-3.16.jar")
+    implementation files("${rootDir}/lib/excel/xmlbeans-2.6.0.jar")
+
+
+    implementation files("${rootDir}/lib/jfree/hamcrest-core-1.3.jar")
+    implementation files("${rootDir}/lib/jfree/jcommon-1.0.23.jar")
+    implementation files("${rootDir}/lib/jfree/jfreechart-1.0.19.jar")
+    implementation files("${rootDir}/lib/jfree/jfreechart-1.0.19-experimental.jar")
+    implementation files("${rootDir}/lib/jfree/jfreechart-1.0.19-swt.jar")
+    implementation files("${rootDir}/lib/jfree/jfreesvg-2.0.jar")
+    implementation files("${rootDir}/lib/jfree/junit-4.11.jar")
+    implementation files("${rootDir}/lib/jfree/orsoncharts-1.4-eval-nofx.jar")
+    implementation files("${rootDir}/lib/jfree/orsonpdf-1.6-eval.jar")
+    implementation files("${rootDir}/lib/jfree/servlet.jar")
+    implementation files("${rootDir}/lib/jfree/swtgraphics2d.jar")
+
+
+    implementation files("${rootDir}/lib/jfx/javafx.controls.jar")
+    implementation files("${rootDir}/lib/jfx/javafx.fxml.jar")
+    implementation files("${rootDir}/lib/jfx/javafx.graphics.jar")
+}
+
+tasks.test {
+    useJUnitPlatform()
+}

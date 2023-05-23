@@ -10,28 +10,41 @@ public class _14DivideyVenceras1 {
 
     // ---------------------------- Divide y vencer�s 1 (est�tico) -------------------------
     public static BigInteger divideyVenceras1(BigInteger num1, BigInteger num2) {
+
+        // Verificar si alguno de los números es cero
+        if (x.equals(BigInteger.ZERO) || y.equals(BigInteger.ZERO)) {
+            return BigInteger.ZERO;
+        }
+
         // Verificar si los n�meros tienen un solo d�gito
-        if (num1.compareTo(BigInteger.TEN) < 0 || num2.compareTo(BigInteger.TEN) < 0) {
-            return num1.multiply(num2);
+        if (x.compareTo(BigInteger.TEN) < 0 || y.compareTo(BigInteger.TEN) < 0) {
+            return x.multiply(y);
         }
 
         // Obtener el tama�o de los n�meros
-        int n = Math.max(num1.bitLength(), num2.bitLength());
+        int n = Math.max(x.bitLength(), y.bitLength());
+
+        // Verificar si n es una potencia de dos
+        if (n % 2 != 0) {
+            n++;
+        }
 
         // Dividir los n�meros en dos mitades
         int m = n / 2;
-        BigInteger a = num1.shiftRight(m);
-        BigInteger b = num1.subtract(a.shiftLeft(m));
-        BigInteger c = num2.shiftRight(m);
-        BigInteger d = num2.subtract(c.shiftLeft(m));
+        BigInteger powerOfTwo = BigInteger.TWO.pow(m);
+
+        BigInteger a = x.divide(powerOfTwo);
+        BigInteger b = x.mod(powerOfTwo);
+        BigInteger c = y.divide(powerOfTwo);
+        BigInteger d = y.mod(powerOfTwo);
 
         // Calcular las tres multiplicaciones necesarias
-        BigInteger ac = divideyVenceras1(a, c);
-        BigInteger bd = divideyVenceras1(b, d);
-        BigInteger abcd = divideyVenceras1(a.add(b), c.add(d));
+        BigInteger ac = dv1Multiplicacion(a, c);
+        BigInteger bd = dv1Multiplicacion(b, d);
+        BigInteger adPlusBc = dv1Multiplicacion(a.add(b), c.add(d)).subtract(ac).subtract(bd);
 
-        // Calcular el resultado final
-        return ac.shiftLeft(2 * m).add(abcd.subtract(ac).subtract(bd).shiftLeft(m)).add(bd);
+        // Combinar los resultados parciales para obtener el resultado final
+        return ac.multiply(powerOfTwo.pow(2)).add(adPlusBc.multiply(powerOfTwo)).add(bd);
     }
 
 }

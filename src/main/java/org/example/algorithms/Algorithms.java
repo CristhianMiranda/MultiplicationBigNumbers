@@ -52,4 +52,8 @@ public class Algorithms {
     public static void karatsubaEstatico(BigInteger num1, BigInteger num2){
         _12KaratsubaEstatico.karatsubaEstatico(num1,num2);
     }
+
+    public static void representadaPorCadenas(String num1, String num2){
+        _13RepresentadaPorCadenas.representadaPorCadenas(num1,num2);
+    }
 }

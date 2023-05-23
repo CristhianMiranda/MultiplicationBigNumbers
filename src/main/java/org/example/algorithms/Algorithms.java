@@ -40,4 +40,8 @@ public class Algorithms {
     public static void rusoEstatico(BigInteger num1, BigInteger num2){
         _9RusaIEstatica.rusoEstatico(num1,num2);
     }
+
+    public static void hinduEstatico(BigInteger[] arr1, BigInteger[] arr2){
+        _10HinduEstatico.induEstatico(arr1,arr2);
+    }
 }

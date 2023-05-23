@@ -2,7 +2,7 @@ package org.example.threads;
 
 import org.example.algorithms.Algorithms;
 
-public class _13RepresentadaPorCadenasThread {
+public class _13RepresentadaPorCadenasThread implements Runnable{
 
     private String num1;
 

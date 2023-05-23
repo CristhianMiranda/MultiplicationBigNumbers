@@ -2,14 +2,15 @@ package org.example.algorithms;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class _2AmericanoIterativoDinamico {
 
     public static void multiplicarAmericanoArrayList(ArrayList<BigInteger> arrayList1, ArrayList<BigInteger> arrayList2){
-        ArrayList<BigInteger>resultado = new ArrayList<>();
+        int longitud = arrayList1.size() + arrayList2.size();
+        ArrayList<BigInteger> resultado = new ArrayList<>(Collections.nCopies(longitud, null));
         BigInteger k;
         BigInteger acarreo = BigInteger.ZERO;
-        int longitud = arrayList1.size() + arrayList2.size();
 
         for(int i = 0; i< longitud; i++){
             resultado.add(BigInteger.ZERO);

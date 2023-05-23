@@ -3,55 +3,31 @@ package org.example.algorithms;
 import java.math.BigInteger;
 
 public class _10HinduEstatico {
-    public static void induEstatico(BigInteger[] arr1, BigInteger[] arr2) {
+    public static void induEstatico(BigInteger[] num1, BigInteger[] num2) {
+        int len1 = num1.length;
+        int len2 = num2.length;
+        int len = len1 + len2;
+        BigInteger[] result = new BigInteger[len];
 
-        BigInteger[] resultado = new BigInteger[arr1.length+ arr2.length];
-        int k;
-        BigInteger[] acarreo = new BigInteger[resultado.length];
-
-        System.out.print("\n");
-
-        for (int i = 0; i < resultado.length; i++) {
-            resultado[i] = BigInteger.ZERO;
-            acarreo[i] = BigInteger.ZERO;
+        for (int i = 0; i < len; i++) {
+            result[i] = BigInteger.ZERO;
         }
 
+        for (int i = len1 - 1; i >= 0; i--) {
+            for (int j = len2 - 1; j >= 0; j--) {
+                int index = i + j + 1;
+                BigInteger mul = num1[i].multiply(num2[j]);
 
-        //Recorre el arreglo multiplicador desde la última posición
-        for (int i = arr2.length -1; i>=0; i--){
+                result[index] = result[index].add(mul);
 
-            //Verifica a qué tan lejos está del borde derecho del arreglo resultado
-            k  = resultado.length - (arr2.length - i);
-            //Recorre el arreglo multiplicando desde la última posición
-            for (int j = arr1.length - 1; j >= 0; j--) {
-
-                //Realiza la multiplicación y suma sobre el resultado anterior
-                resultado[k] = resultado[k].add(arr1[j].multiply(arr2[i]));
-                //resultado[k] += arr1[j] * arr2[i];
-
-                //Condición que verifica si el resultado es igual o mayor a 10
-                if(resultado[k].compareTo(BigInteger.TEN) >= 0){
-
-                    //indicar que se acumula en el acarreo en k-1
-                    acarreo[k-1] = acarreo[k-1].add(resultado[k].divide(BigInteger.TEN));
-                    //y que queda almacenado en la posicion [k]
-                    resultado[k] = resultado[k].mod(BigInteger.TEN);
-                } else {
-                    acarreo[k-1] = BigInteger.ZERO;
+                if (result[index].compareTo(BigInteger.TEN) >= 0) {
+                    BigInteger carry = result[index].divide(BigInteger.TEN);
+                    result[index] = result[index].mod(BigInteger.TEN);
+                    result[index - 1] = result[index - 1].add(carry);
                 }
-
-                k--;
             }
         }
-        for (int i = resultado.length - 1; i>=0; i--){
-            resultado[i] = resultado[i].add(acarreo[i]);
-            //resultado[i] += acarreo[i];
 
-            if(resultado[i].compareTo(BigInteger.TEN) >= 0){
-                acarreo[i-1] = acarreo[i-1].add(resultado[i].divide(BigInteger.TEN));
-                resultado[i] = resultado[i].mod(BigInteger.TEN);
-            }
-        }
+
     }
-
 }

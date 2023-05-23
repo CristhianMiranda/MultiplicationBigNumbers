@@ -37,7 +37,7 @@ public class Algorithms {
         _8InglesRecursivoDinamico.multiplicarArrayListAmericanoRecursivo(arrayList1,arrayList2);
     }
 
-    public static void rusoEstatico(BigInteger num1, BigInteger num2){
+    public static void rusoEstatico(BigInteger[] num1, BigInteger[] num2){
         _9RusaIEstatica.rusoEstatico(num1,num2);
     }
 
@@ -45,11 +45,11 @@ public class Algorithms {
         _10HinduEstatico.induEstatico(arr1,arr2);
     }
 
-    public static void egipcioEstatico(BigInteger num1, BigInteger num2){
+    public static void egipcioEstatico(BigInteger[] num1, BigInteger[] num2){
         _11EgipciaEstatico.multiplicacionEgipcia(num1,num2);
     }
 
-    public static void karatsubaEstatico(BigInteger num1, BigInteger num2){
+    public static void karatsubaEstatico(BigInteger[] num1, BigInteger[] num2){
         _12KaratsubaEstatico.karatsubaEstatico(num1,num2);
     }
 
@@ -57,11 +57,11 @@ public class Algorithms {
         _13RepresentadaPorCadenas.representadaPorCadenas(num1,num2);
     }
 
-    public static void divideVenceras1(BigInteger num1, BigInteger num2){
+    public static void divideVenceras1(BigInteger[] num1, BigInteger[] num2){
         _14DivideyVenceras1.divideyVenceras1(num1,num2);
     }
 
-    public static void divideVenceras2(BigInteger num1, BigInteger num2){
+    public static void divideVenceras2(BigInteger[] num1, BigInteger[] num2){
         _15DivideyVenceras2.divideyVenceras2(num1,num2);
 
     }

@@ -8,8 +8,11 @@ public class _3AmericanoRecursivoEstatico {
     //Si el valor que hay en el arreglo 1 es mayor al valor del arreglo 2 entonces se intercambian
     //Es utilizado en el método recursivo
     public static void multiplicarArreglosAmericanoRecursivo(BigInteger[] arr1, BigInteger[] arr2) {
-
         BigInteger[] resultado = new BigInteger[arr1.length + arr2.length];
+
+        for (int index = 0; index < resultado.length; index++) {
+            resultado[index] = BigInteger.ZERO;
+        }
 
         BigInteger acarreo = BigInteger.ZERO;
         int i = arr2.length - 1;
@@ -22,68 +25,29 @@ public class _3AmericanoRecursivoEstatico {
             arr2 = arrAux1;
         }
 
-        for (int index = 0; index < resultado.length; index++) {
-            resultado[index] = BigInteger.ZERO;
-        }
+        while (i >= 0) {
+            while (j >= 0) {
+                resultado[k] = resultado[k].add(arr1[j].multiply(arr2[i])).add(acarreo);
 
-        multiplicacionAmericanoRecursivo(arr1, arr2, resultado, acarreo, i, j, k);
+                if (resultado[k].compareTo(BigInteger.TEN) >= 0) {
+                    acarreo = resultado[k].divide(BigInteger.TEN);
+                    resultado[k] = resultado[k].mod(BigInteger.TEN);
+                } else {
+                    acarreo = BigInteger.ZERO;
+                }
 
-    }
-
-    public static void multiplicacionAmericanoRecursivo(BigInteger[] arr1, BigInteger[] arr2, BigInteger[] resultado,
-                                                        BigInteger acarreo, int i, int j, int k){
-
-        if(i==0 && j==0) {
-            resultado[k] = resultado[k].add(arr1[j].multiply(arr2[i])).add(acarreo);
-
-            if (resultado[k].compareTo(BigInteger.TEN) >= 0) {
-                acarreo = resultado[k].divide(BigInteger.TEN);
-                resultado[k] = resultado[k].mod(BigInteger.TEN);
-            } else {
-                acarreo = BigInteger.ZERO;
+                k--;
+                j--;
             }
-            k--;
-            resultado[k] = acarreo;
-            //System.out.println(arr1[j] + "," + arr2[i]);
 
-
-        } else if (j == 0) {
-            //System.out.println(arr1[j] + "," + arr2[i]);
-
-            //Está en la posición j=0 e i= cualquier valor del arr1 (For anidado)
-            resultado[k] = resultado[k].add(arr1[j].multiply(arr2[i])).add(acarreo);
-
-            if(resultado[k].compareTo(BigInteger.TEN) >= 0){
-                acarreo = resultado[k].divide(BigInteger.TEN);
-                resultado[k] = resultado[k].mod(BigInteger.TEN);
-            } else {
-                acarreo = BigInteger.ZERO;
-            }
-            k--;
-
-            //Termina el segundo for e itera el arr2 (primer for)
             resultado[k] = acarreo;
             acarreo = BigInteger.ZERO;
             i--;
             j = arr1.length - 1;
             k = resultado.length - (arr2.length - i);
-            multiplicacionAmericanoRecursivo(arr1,arr2,resultado,acarreo,i,j,k);
-        } else {
-            //System.out.println(arr1[j] + "," + arr2[i]);
-
-            resultado[k] = resultado[k].add(arr1[j].multiply(arr2[i])).add(acarreo);
-
-            if(resultado[k].compareTo(BigInteger.TEN) >= 0){
-                acarreo = resultado[k].divide(BigInteger.TEN);
-                resultado[k] = resultado[k].mod(BigInteger.TEN);
-            } else {
-                acarreo = BigInteger.ZERO;
-            }
-            k--;
-            j--;
-            multiplicacionAmericanoRecursivo(arr1,arr2,resultado,acarreo,i,j,k);
-
         }
 
+        // Aquí puedes utilizar el arreglo 'resultado' según tus necesidades
     }
+
 }

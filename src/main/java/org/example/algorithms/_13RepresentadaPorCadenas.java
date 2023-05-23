@@ -4,7 +4,7 @@ import java.math.BigInteger;
 
 public class _13RepresentadaPorCadenas {
 
-    public static BigInteger representadaPorCadenas(String num1, String num2) {
+    public static void representadaPorCadenas(String num1, String num2) {
         int n = num1.length();
         int m = num2.length();
         int[] product = new int[n + m];
@@ -33,6 +33,6 @@ public class _13RepresentadaPorCadenas {
             sb.deleteCharAt(0);
         }
 
-        return new BigInteger(sb.toString());
+        System.out.println(sb.toString());
     }
 }

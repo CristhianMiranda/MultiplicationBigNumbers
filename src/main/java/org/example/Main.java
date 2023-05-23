@@ -9,6 +9,7 @@ import java.io.*;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
@@ -19,7 +20,7 @@ public class Main {
 
     public static void calculoTiempoEjecucionMultiplicacionMatrices() {
 
-        int tamano = 60;
+        int tamano = 1;
         eliminarArchivo();
 
         for (int i = 1; i <= 8; i++) {
@@ -255,7 +256,7 @@ public class Main {
                 break;
             case 11:
                 startTime = System.nanoTime();
-                t = new Thread(new V1_SequentialBlockThread(arregloA, arregloB, size, bsize));
+                t = new Thread(new _11EgipciaEstaticoThread(arregloA, arregloB));
                 t.run();
                 endTime = System.nanoTime();
                 System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (V1_SequentialBlock)");
@@ -264,7 +265,7 @@ public class Main {
                 break;
             case 12:
                 startTime = System.nanoTime();
-                t = new Thread(new V1_ParallelBlockThread(arregloA, arregloB, size, bsize));
+                t = new Thread(new _12KratsubaEstaticoThread(arregloA, arregloB));
                 t.run();
                 endTime = System.nanoTime();
                 System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (V1_ParallelBlock)");
@@ -273,7 +274,7 @@ public class Main {
                 break;
             case 13:
                 startTime = System.nanoTime();
-                t = new Thread(new V2_SequentialBlockThread(arregloA, arregloB, size, bsize));
+                t = new Thread(new _13RepresentadaPorCadenasThread(convertirArregloBigIntegerAString(arregloA), convertirArregloBigIntegerAString(arregloB)));
                 t.run();
                 endTime = System.nanoTime();
                 System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (V2_SequentialBlock)");
@@ -282,7 +283,7 @@ public class Main {
                 break;
             case 14:
                 startTime = System.nanoTime();
-                t = new Thread(new V2_ParallelBlockThread(arregloA, arregloB, size, bsize));
+                t = new Thread(new _14DivideyVenceras1Thread(arregloA, arregloB));
                 t.run();
                 endTime = System.nanoTime();
                 System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (V2_ParallelBlock)");
@@ -291,24 +292,22 @@ public class Main {
                 break;
             case 15:
                 startTime = System.nanoTime();
-                t = new Thread(new V3_SequentialBlockThread(arregloA, arregloB, size, bsize));
+                t = new Thread(new _15DivideyVenceras2Thread(arregloA, arregloB));
                 t.run();
                 endTime = System.nanoTime();
                 System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (V3_SequentialBlock)");
                 ExcelController.escribirEnHoja(id, caso, size + "", (endTime - startTime) );
                 acumularValores((endTime - startTime), String.valueOf(id));
                 break;
-            case 16:
-                startTime = System.nanoTime();
-                t = new Thread(new V3_ParallelBlockThread(arregloA, arregloB, size, bsize));
-                t.run();
-                endTime = System.nanoTime();
-                System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (V3_ParallelBlock)");
-                ExcelController.escribirEnHoja(id, caso, size + "", (endTime - startTime));
-                acumularValores((endTime - startTime), String.valueOf(id));
-                break;
         }
 
+    }
+
+    public static String convertirArregloBigIntegerAString(BigInteger[] arreglo) {
+        return Arrays.stream(arreglo)
+                .map(BigInteger::toString)
+                .map(s -> s.replaceAll("[^0-9]", ""))  // Eliminar caracteres no numéricos
+                .collect(Collectors.joining(" "));
     }
 
     public static ArrayList<BigInteger> convertArrayToArrayList(BigInteger[] array) {

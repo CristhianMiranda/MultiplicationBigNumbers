@@ -53,13 +53,16 @@ public class GraficaBarrasPromedio extends JFrame {
 
     public CategoryDataset createDataset() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        System.out.println(ids.length+ "\n"+promedios.length);
 
         // Agregar los datos a la tabla
         for (int i = 0; i <= ids.length; i++) {
             switch (i)
             {
                 case 0:
+                    System.out.println("prueba");
                     dataset.addValue(promedios[i], "Algoritmos", "NaivStandard");
+                    System.out.println("pruebas");
                     break;
 
                 case 1:

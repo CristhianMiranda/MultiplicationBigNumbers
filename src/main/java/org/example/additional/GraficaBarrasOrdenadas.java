@@ -54,7 +54,7 @@ public class GraficaBarrasOrdenadas extends JFrame {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
         // Agregar los datos a la tabla
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 14; i++) {
             dataset.addValue(promedios[i], "Algoritmos", ids.get(i));
         }
 

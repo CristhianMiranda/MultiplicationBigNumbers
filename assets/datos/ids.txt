@@ -1,16 +1,15 @@
-V2_Parallel Block
-V2_Sequential block
-StrassenWinograd
-StrassenNaiv
-V1_Sequential block
-V1_Parallel Block
-V3_Sequential block
-V3_Parallel Block
-WinogradOriginal
-NaivLoopUnrollingFour
-WinogradScaled
-NaivStandard
-NaivLoopUnrollingTwo
-NaivKahan
-NaivLoopUnrollingThree
-NaivOnArray
+Egipcia (estático)
+Rusa (estático)
+Multiplicación representada con cadenas
+Inglesa iterativo (dinámico)
+Inglesa iterativo (estático)
+Americana iterativo (estático)
+Americana iterativo (dinámico)
+Divide y vencerás 1 (estático)
+Americana recursivo (dinámico)
+Algoritmo de Karatsuba (estático)
+Inglesa recursivo (estático)
+Americana recursivo (estático)
+Hindú (estático)
+Divide y vencerás 2 (estático)
+Inglesa recursivo (dinámico)

@@ -83,7 +83,7 @@ public class Main {
     public static void unify() {
         String folderPath = "assets/promedio/";
         String outputFilePath = folderPath + "promedios.txt";
-        DecimalFormat df = new DecimalFormat("#.##");
+        DecimalFormat df = new DecimalFormat("#.00");
 
         try (PrintWriter writer = new PrintWriter(outputFilePath)) {
             for (int i = 1; i <= 15; i++) {
@@ -132,7 +132,7 @@ public class Main {
     public static double[] readNumbersFromFile(String filename) {
         try {
             Scanner scanner = new Scanner(new File(filename));
-            scanner.useDelimiter(",");
+            scanner.useDelimiter("\\.");
 
             // Contar la cantidad de números en el archivo
             int count = 0;
@@ -144,7 +144,7 @@ public class Main {
             // Crear el arreglo y volver a leer el archivo
             double[] numbers = new double[count];
             scanner = new Scanner(new File(filename));
-            scanner.useDelimiter(",");
+            scanner.useDelimiter("\\.");
             for (int i = 0; i < count; i++) {
                 numbers[i] = scanner.nextDouble();
             }
@@ -157,6 +157,7 @@ public class Main {
             return null;
         }
     }
+
 
 
     public static void tiempoRespuesta(BigInteger[] arregloA, BigInteger[] arregloB, int id, int caso, int size) throws InterruptedException {

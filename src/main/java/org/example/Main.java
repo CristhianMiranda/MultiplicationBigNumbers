@@ -8,6 +8,7 @@ import org.example.threads.*;
 import java.io.*;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -45,7 +46,8 @@ public class Main {
                 double averageTime = calculateAverageExecutionTime(j);
 
                 // Formateo del tiempo promedio con 2 decimales
-                DecimalFormat decimalFormat = new DecimalFormat("#0.00");
+                DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+                DecimalFormat decimalFormat = new DecimalFormat("#0.00", symbols);
                 String formattedAverageTime = decimalFormat.format(averageTime);
 
                 guardarPromedioTiempoEjecucion(j, i, Double.parseDouble(formattedAverageTime));
@@ -538,7 +540,8 @@ public class Main {
         }
 
         // Formatear el resultado con dos decimales
-        DecimalFormat df = new DecimalFormat("#.##");
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+        DecimalFormat df = new DecimalFormat("#.##", symbols);
         return count > 0 ? Double.parseDouble(df.format(sum / count)) : 0;
     }
 

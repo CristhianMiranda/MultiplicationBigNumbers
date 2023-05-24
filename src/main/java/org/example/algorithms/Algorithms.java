@@ -49,7 +49,7 @@ public class Algorithms {
         _11EgipciaEstatico.multiplicacionEgipcia(num1,num2);
     }
 
-    public static void karatsubaEstatico(BigInteger num1, BigInteger num2){
+    public static void karatsubaEstatico(BigInteger[] num1, BigInteger[] num2){
         _12KaratsubaEstatico.karatsubaEstatico(num1,num2);
     }
 

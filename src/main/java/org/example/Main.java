@@ -22,7 +22,7 @@ public class Main {
 
     public static void calculoTiempoEjecucionMultiplicacion() throws InterruptedException {
 
-        int tamano = 100;
+        int tamano = 1;
         eliminarArchivo();
 
         for (int i = 1; i <= 8; i++) {
@@ -75,7 +75,7 @@ public class Main {
         GraficaBarrasPromedio graficaBarrasPromedio = new GraficaBarrasPromedio(new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15},promedios);
     }
     private static void graficaBarrasOrden() {
-        unify();
+        //unify();
         double[] tiempos = readNumbersFromFile("assets/datos/execution_times_sorted.txt");
         GraficaBarrasOrdenadas barChartExample = new GraficaBarrasOrdenadas(readTxtFile("assets/datos/ids.txt"),tiempos);
     }

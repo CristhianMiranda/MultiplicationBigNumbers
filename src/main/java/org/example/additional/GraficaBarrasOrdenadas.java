@@ -40,7 +40,7 @@ public class GraficaBarrasOrdenadas extends JFrame {
         // Crear la imagen del gráfico
         int width = 1920; // Ancho de la imagen en píxeles
         int height = 1080; // Altura de la imagen en píxeles
-        String filename = "assets/graficos/TiempoOrdenCaso12/grafico.png"; // Nombre del archivo de la imagen
+        String filename = "assets/graficos/TiempoOrdenCaso8/grafico.png"; // Nombre del archivo de la imagen
         File file = new File(filename);
         try {
             ChartUtilities.saveChartAsPNG(file, createChart(createDataset()), width, height);

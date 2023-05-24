@@ -57,8 +57,7 @@ public class GraficaBarrasPromedio extends JFrame {
 
         // Agregar los datos a la tabla
         for (int i = 1; i <= ids.length; i++) {
-            switch (i)
-            {
+            switch (i) {
                 case 1:
                     System.out.println("prueba");
                     dataset.addValue(promedios[i], "Algoritmos", "AmericanoIterativoEstatico");

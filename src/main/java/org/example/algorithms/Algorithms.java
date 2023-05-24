@@ -42,6 +42,14 @@ public class Algorithms {
     }
 
     public static void hinduEstatico(BigInteger[] arr1, BigInteger[] arr2){
+        arr1 = new BigInteger[]{BigInteger.valueOf(9),
+                BigInteger.valueOf(9), BigInteger.valueOf(9),
+                BigInteger.valueOf(9), BigInteger.valueOf(9),
+                BigInteger.valueOf(9), BigInteger.valueOf(9)};
+        arr2 = new BigInteger[]{BigInteger.valueOf(9),
+                BigInteger.valueOf(9), BigInteger.valueOf(9),
+                BigInteger.valueOf(9), BigInteger.valueOf(9),
+                BigInteger.valueOf(9), BigInteger.valueOf(9)};
         _10HinduEstatico.induEstatico(arr1,arr2);
     }
 

@@ -2,7 +2,7 @@ package org.example.threads;
 
 import org.example.algorithms.Algorithms;
 
-public class _13RepresentadaPorCadenasThread {
+public class _13RepresentadaPorCadenasThread implements Runnable{
 
     private String[] num1;
 
@@ -13,6 +13,7 @@ public class _13RepresentadaPorCadenasThread {
         this.num2 = num2;
     }
 
+    @Override
     public void run(){
         Algorithms.representadaPorCadenas(num1,num2);
     }

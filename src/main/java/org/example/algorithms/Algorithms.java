@@ -18,6 +18,7 @@ public class Algorithms {
     }
 
     public static void americanoRecursivoDinamico(ArrayList<BigInteger> arrayList1, ArrayList<BigInteger> arrayList2){
+
         _4AmericanoRecursivoDinamico.multiplicarArrayListRecursivo(arrayList1, arrayList2);
     }
 
@@ -42,14 +43,6 @@ public class Algorithms {
     }
 
     public static void hinduEstatico(BigInteger[] arr1, BigInteger[] arr2){
-        arr1 = new BigInteger[]{BigInteger.valueOf(9),
-                BigInteger.valueOf(9), BigInteger.valueOf(9),
-                BigInteger.valueOf(9), BigInteger.valueOf(9),
-                BigInteger.valueOf(9), BigInteger.valueOf(9)};
-        arr2 = new BigInteger[]{BigInteger.valueOf(9),
-                BigInteger.valueOf(9), BigInteger.valueOf(9),
-                BigInteger.valueOf(9), BigInteger.valueOf(9),
-                BigInteger.valueOf(9), BigInteger.valueOf(9)};
         _10HinduEstatico.induEstatico(arr1,arr2);
     }
 

@@ -56,57 +56,57 @@ public class GraficaBarrasPromedio extends JFrame {
         System.out.println(ids.length+ "\n"+promedios.length);
 
         // Agregar los datos a la tabla
-        for (int i = 0; i <= ids.length; i++) {
+        for (int i = 1; i <= ids.length; i++) {
             switch (i)
             {
-                case 0:
+                case 1:
                     System.out.println("prueba");
-                    dataset.addValue(promedios[i], "Algoritmos", "NaivStandard");
+                    dataset.addValue(promedios[i], "Algoritmos", "AmericanoIterativoEstatico");
                     System.out.println("pruebas");
                     break;
 
-                case 1:
-                    dataset.addValue(promedios[i], "Algoritmos", "NaivOnArray");
+                case 2:
+                    dataset.addValue(promedios[i], "Algoritmos", "AmericanoIterativoDinamico");
                     break;
 
-                case 2:
-                    dataset.addValue(promedios[i], "Algoritmos", "NaivKahan");
-                    break;
                 case 3:
-                    dataset.addValue(promedios[i], "Algoritmos", "NaivLoopUnrollingTwo");
+                    dataset.addValue(promedios[i], "Algoritmos", "Americano Recursivo Estatico");
                     break;
                 case 4:
-                    dataset.addValue(promedios[i], "Algoritmos", "NaivLoopUnrollingThree");
+                    dataset.addValue(promedios[i], "Algoritmos", "Americano Recursivo Dinamico");
                     break;
                 case 5:
-                    dataset.addValue(promedios[i], "Algoritmos", "NaivLoopUnrollingFour");
+                    dataset.addValue(promedios[i], "Algoritmos", "Ingles Iterativo Estatico");
                     break;
                 case 6:
-                    dataset.addValue(promedios[i], "Algoritmos", "WinogradOriginal");
+                    dataset.addValue(promedios[i], "Algoritmos", "Ingles Iterativo Dinamico");
                     break;
                 case 7:
-                    dataset.addValue(promedios[i], "Algoritmos", "WinogradScaled");
+                    dataset.addValue(promedios[i], "Algoritmos", "Ingles Recursivo Estatico");
                     break;
                 case 8:
-                    dataset.addValue(promedios[i], "Algoritmos", "StrassenNaiv");
+                    dataset.addValue(promedios[i], "Algoritmos", "Ingles Recursivo Estatico");
                     break;
                 case 9:
-                    dataset.addValue(promedios[i], "Algoritmos", "StrassenWinograd");
+                    dataset.addValue(promedios[i], "Algoritmos", "Ruso Estatico");
                     break;
                 case 10:
-                    dataset.addValue(promedios[i], "Algoritmos", "V1_Sequential block");
+                    dataset.addValue(promedios[i], "Algoritmos", "Hindu Estatico");
                     break;
                 case 11:
-                    dataset.addValue(promedios[i], "Algoritmos", "V1_Parallel Block");
+                    dataset.addValue(promedios[i], "Algoritmos", "Egipcia Estatico");
                     break;
                 case 12:
-                    dataset.addValue(promedios[i], "Algoritmos", "V2_Sequential block");
+                    dataset.addValue(promedios[i], "Algoritmos", "Karatsuba Estatico");
                     break;
                 case 13:
-                    dataset.addValue(promedios[i], "Algoritmos", "V2_Parallel Block");
+                    dataset.addValue(promedios[i], "Algoritmos", "Representada por Cadenas");
                     break;
                 case 14:
-                    dataset.addValue(promedios[i], "Algoritmos", "V3_Sequential block");
+                    dataset.addValue(promedios[i], "Algoritmos", "Divide y Venceras 1");
+                    break;
+                case 15:
+                    dataset.addValue(promedios[i], "Algoritmos", "Divide y Venceras");
                     break;
             }
 

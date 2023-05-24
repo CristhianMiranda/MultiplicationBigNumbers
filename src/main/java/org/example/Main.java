@@ -6,6 +6,7 @@ import org.example.additional.GraficaBarrasPromedio;
 import org.example.threads.*;
 
 import java.io.*;
+import java.lang.reflect.Field;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -13,15 +14,15 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         System.out.println("Hello world!");
         calculoTiempoEjecucionMultiplicacion();
 
     }
 
-    public static void calculoTiempoEjecucionMultiplicacion() {
+    public static void calculoTiempoEjecucionMultiplicacion() throws InterruptedException {
 
-        int tamano = 1;
+        int tamano = 100;
         eliminarArchivo();
 
         for (int i = 1; i <= 8; i++) {
@@ -34,9 +35,6 @@ public class Main {
 
                 BigInteger[] arregloB = generateRandomBigIntegerArray(size);
 
-                //escribirArchivoTxt(matrizString(convertirMatrizBigIntegerAEntera(matrizA)), matrizString(convertirMatrizBigIntegerAEntera(matrizB)));
-
-                BigInteger[] matrizC = new BigInteger[size];
 
                 if(j==1) {
                     System.out.println("\n\nCaso" + i + ": / Tamaño:" + size /*+ " / Algoritmo:" + j*/);
@@ -50,8 +48,6 @@ public class Main {
                 DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
                 DecimalFormat decimalFormat = new DecimalFormat("#0.00", symbols);
                 String formattedAverageTime = decimalFormat.format(averageTime);
-
-                System.out.println("Formatted average time: " + formattedAverageTime); // Add this line
 
                 guardarPromedioTiempoEjecucion(j, i, Double.parseDouble(formattedAverageTime));
                 ExcelController.escribirEnHojaEspecifica(Double.parseDouble(formattedAverageTime), j - 1);
@@ -163,7 +159,7 @@ public class Main {
     }
 
 
-    public static void tiempoRespuesta(BigInteger[] arregloA, BigInteger[] arregloB, int id, int caso, int size) {
+    public static void tiempoRespuesta(BigInteger[] arregloA, BigInteger[] arregloB, int id, int caso, int size) throws InterruptedException {
         long startTime, endTime;
         Thread t;
 
@@ -189,8 +185,19 @@ public class Main {
                 break;
             case 3:
                 startTime = System.nanoTime();
-                t = new Thread(new _3AmericanoRecursivoEstaticoThread(arregloA, arregloB));
-                t.run();
+                /*t = new Thread(new _3AmericanoRecursivoEstaticoThread(arregloA, arregloB));
+                t.run();*/
+
+                t = new Thread(() -> {
+                    try {
+                        increaseStackSize();
+                        new _3AmericanoRecursivoEstaticoThread(arregloA, arregloB);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+                t.start();
+                t.join();
                 endTime = System.nanoTime();
                 System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (Americana recursivo (estático))");
                 ExcelController.escribirEnHoja(id, caso, size + "", (endTime - startTime) );
@@ -198,8 +205,19 @@ public class Main {
                 break;
             case 4:
                 startTime = System.nanoTime();
-                t = new Thread(new _4AmericanoRecursivoDinamicoThread(convertArrayToArrayList(arregloA),convertArrayToArrayList(arregloB)));
-                t.run();
+                /*t = new Thread(new _4AmericanoRecursivoDinamicoThread(convertArrayToArrayList(arregloA),convertArrayToArrayList(arregloB)));
+                t.run();*/
+
+                t = new Thread(() -> {
+                    try {
+                        increaseStackSize();
+                        new _4AmericanoRecursivoDinamicoThread(convertArrayToArrayList(arregloA),convertArrayToArrayList(arregloB));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+                t.start();
+                t.join();
                 endTime = System.nanoTime();
                 System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (Americana recursivo (dinámico))");
                 ExcelController.escribirEnHoja(id, caso, size + "", (endTime - startTime) );
@@ -225,8 +243,19 @@ public class Main {
                 break;
             case 7:
                 startTime = System.nanoTime();
-                t = new Thread(new _7InglesRecursivoEstaticoThread(arregloA, arregloB));
-                t.run();
+                /*t = new Thread(new _7InglesRecursivoEstaticoThread(arregloA, arregloB));
+                t.run();*/
+
+                t = new Thread(() -> {
+                    try {
+                        increaseStackSize();
+                        new _7InglesRecursivoEstaticoThread(arregloA, arregloB);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+                t.start();
+                t.join();
                 endTime = System.nanoTime();
                 System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (Inglesa recursivo (estático))");
                 ExcelController.escribirEnHoja(id, caso, size + "", (endTime - startTime) );
@@ -234,8 +263,20 @@ public class Main {
                 break;
             case 8:
                 startTime = System.nanoTime();
-                t = new Thread(new _8InglesRecursivoDinamicoThread(convertArrayToArrayList(arregloA),convertArrayToArrayList(arregloB)));
-                t.run();
+                /*t = new Thread(new _8InglesRecursivoDinamicoThread(convertArrayToArrayList(arregloA),convertArrayToArrayList(arregloB)));
+                t.run();*/
+
+                t = new Thread(() -> {
+                    try {
+                        increaseStackSize();
+                        new _8InglesRecursivoDinamicoThread(convertArrayToArrayList(arregloA),convertArrayToArrayList(arregloB));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+
+                t.start();
+                t.join();
                 endTime = System.nanoTime();
                 System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (Inglesa recursivo (dinámico))");
                 ExcelController.escribirEnHoja(id, caso, size + "", (endTime - startTime));
@@ -252,8 +293,20 @@ public class Main {
                 break;
             case 10:
                 startTime = System.nanoTime();
-                t = new Thread(new _10HinduEstaticoThread(arregloA, arregloB));
-                t.run();
+                /*t = new Thread(new _10HinduEstaticoThread(arregloA, arregloB));
+                t.run();*/
+
+                t = new Thread(() -> {
+                    try {
+                        increaseStackSize();
+                        new _10HinduEstaticoThread(arregloA, arregloB);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+
+                t.start();
+                t.join();
                 endTime = System.nanoTime();
                 System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (Hindú (estático))");
                 ExcelController.escribirEnHoja(id, caso, size + "", (endTime - startTime) );
@@ -270,11 +323,22 @@ public class Main {
                 break;
             case 12:
                 startTime = System.nanoTime();
-                t = new Thread(new _12KratsubaEstaticoThread(arregloA, arregloB));
-                t.run();
+                /*t = new Thread(new _12KratsubaEstaticoThread(arregloA, arregloB));
+                t.run();*/
+
+                t = new Thread(() -> {
+                    try {
+                        increaseStackSize();
+                        new _12KratsubaEstaticoThread(arregloA, arregloB);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+                t.start();
+                t.join();
                 endTime = System.nanoTime();
                 System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (Algoritmo de Karatsuba (estático))");
-                ExcelController.escribirEnHoja(id, caso, size + "", (endTime - startTime));
+                //ExcelController.escribirEnHoja(id, caso, size + "", (endTime - startTime));
                 acumularValores((endTime - startTime), String.valueOf(id));
                 break;
             case 13:
@@ -297,8 +361,20 @@ public class Main {
                 break;
             case 15:
                 startTime = System.nanoTime();
-                t = new Thread(new _15DivideyVenceras2Thread(convertArrayToBigInteger(arregloA), convertArrayToBigInteger(arregloB)));
-                t.run();
+                /*t = new Thread(new _15DivideyVenceras2Thread(convertArrayToBigInteger(arregloA), convertArrayToBigInteger(arregloB)));
+                t.run();*/
+
+                t = new Thread(() -> {
+                    try {
+                        increaseStackSize();
+                        new _15DivideyVenceras2Thread(convertArrayToBigInteger(arregloA), convertArrayToBigInteger(arregloB));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+
+                t.start();
+                t.join();
                 endTime = System.nanoTime();
                 System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (Divide y vencerás 2 (estático))");
                 ExcelController.escribirEnHoja(id, caso, size + "", (endTime - startTime) );
@@ -359,7 +435,24 @@ public class Main {
             }
         }
     }
+    public static void increaseStackSize() throws Exception {
+        Field field = ClassLoader.class.getDeclaredField("sys_paths");
+        field.setAccessible(true);
+        field.set(null, null);
 
+        String os = System.getProperty("os.name").toLowerCase();
+        String command;
+
+        if (os.contains("win")) {
+            command = "cmd /C start /B /MIN cmd.exe /C \"\"set \"JAVA_OPTS=%JAVA_OPTS% -Xss8m\"\" && \"\"%~s0\"\" %*";
+        } else if (os.contains("nix") || os.contains("nux") || os.contains("mac")) {
+            command = "sh -c \"exec nohup \"$0\" \"$@\" 2> /dev/null &\" ";
+        } else {
+            throw new Exception("Unsupported operating system: " + os);
+        }
+
+        Runtime.getRuntime().exec(command);
+    }
 
     public static BigInteger[] generateRandomBigIntegerArray(int rows) {
         // Create a new one-dimensional array of BigInteger objects of size rows x columns.

@@ -8,17 +8,18 @@ import org.example.threads.*;
 import java.io.*;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hello world!");
-        calculoTiempoEjecucionMultiplicacionMatrices();
+        calculoTiempoEjecucionMultiplicacion();
 
     }
 
-    public static void calculoTiempoEjecucionMultiplicacionMatrices() {
+    public static void calculoTiempoEjecucionMultiplicacion() {
 
         int tamano = 1;
         eliminarArchivo();
@@ -28,25 +29,29 @@ public class Main {
                 // Tamaño de las matrices
                 int size = tamano * i * 2;
 
-                BigInteger[] arregloA = generateRandomBigIntegerArray(size, size);
+                BigInteger[] arregloA = generateRandomBigIntegerArray(size);
 
 
-                BigInteger[] arregloB = generateRandomBigIntegerArray(size, size);
+                BigInteger[] arregloB = generateRandomBigIntegerArray(size);
 
                 //escribirArchivoTxt(matrizString(convertirMatrizBigIntegerAEntera(matrizA)), matrizString(convertirMatrizBigIntegerAEntera(matrizB)));
 
                 BigInteger[] matrizC = new BigInteger[size];
 
-                if(j==1)
-                {System.out.println("\n\nCaso" + i + ": / Tamaño:" + size /*+ " / Algoritmo:" + j*/);}
+                if(j==1) {
+                    System.out.println("\n\nCaso" + i + ": / Tamaño:" + size /*+ " / Algoritmo:" + j*/);
+                }
 
-                tiempoRespuesta(arregloA, arregloB, matrizC, j, i, size);
+                tiempoRespuesta(arregloA, arregloB, j, i, size);
                 // Cálculo del tiempo promedio
                 double averageTime = calculateAverageExecutionTime(j);
 
                 // Formateo del tiempo promedio con 2 decimales
-                DecimalFormat decimalFormat = new DecimalFormat("#0.00");
+                DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+                DecimalFormat decimalFormat = new DecimalFormat("#0.00", symbols);
                 String formattedAverageTime = decimalFormat.format(averageTime);
+
+                System.out.println("Formatted average time: " + formattedAverageTime); // Add this line
 
                 guardarPromedioTiempoEjecucion(j, i, Double.parseDouble(formattedAverageTime));
                 ExcelController.escribirEnHojaEspecifica(Double.parseDouble(formattedAverageTime), j - 1);
@@ -54,8 +59,6 @@ public class Main {
                 if (i == 8) {
                     System.out.println("Tiempo promedio de ejecución: " + formattedAverageTime + " ns\n");
                 }
-
-
 
             }
         }
@@ -69,13 +72,14 @@ public class Main {
 
 
     }
+
     private static void graficaBarras() {
         unify();
         double[] promedios = readNumbersFromFile("assets/promedio/promedios.txt");
         GraficaBarrasPromedio graficaBarrasPromedio = new GraficaBarrasPromedio(new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15},promedios);
     }
     private static void graficaBarrasOrden() {
-        //unify();
+        unify();
         double[] tiempos = readNumbersFromFile("assets/datos/execution_times_sorted.txt");
         GraficaBarrasOrdenadas barChartExample = new GraficaBarrasOrdenadas(readTxtFile("assets/datos/ids.txt"),tiempos);
     }
@@ -97,9 +101,10 @@ public class Main {
                 try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) {
                     String line;
                     while ((line = reader.readLine()) != null) {
+                        line = line.replace(',', '.');
                         double value = Double.parseDouble(line.trim());
                         String formatted = df.format(value);
-                        writer.print(formatted + ",");
+                        writer.print(formatted + ".");
                     }
                 } catch (IOException e) {
                     System.err.println("Error reading file: " + inputFilePath);
@@ -111,6 +116,7 @@ public class Main {
             e.printStackTrace();
         }
     }
+
     public static ArrayList<String> readTxtFile(String fileName) {
         ArrayList<String> data = new ArrayList<>();
         try {
@@ -157,9 +163,8 @@ public class Main {
     }
 
 
-    public static void tiempoRespuesta(BigInteger[] arregloA, BigInteger[] arregloB, BigInteger[] arregloC, int id, int caso, int size) {
+    public static void tiempoRespuesta(BigInteger[] arregloA, BigInteger[] arregloB, int id, int caso, int size) {
         long startTime, endTime;
-        int bsize = (int) Math.sqrt(size);
         Thread t;
 
         switch (id) {
@@ -168,7 +173,7 @@ public class Main {
                 t = new Thread(new _1AmericanoIterativoEstaticoThread(arregloA, arregloB));
                 t.run();
                 endTime = System.nanoTime();
-                System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (NaivStandard)");
+                System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (Americana iterativo (estático))");
                 ExcelController.escribirEnHoja(id, caso, size + "", (endTime - startTime) );
                 acumularValores((endTime - startTime), String.valueOf(id));
                 break;
@@ -178,7 +183,7 @@ public class Main {
                 t = new Thread(new _2AmericanoIterativoDinamicoThread(convertArrayToArrayList(arregloA),convertArrayToArrayList(arregloB)));
                 t.run();
                 endTime = System.nanoTime();
-                System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (NaivOnArray)");
+                System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (Americana iterativo (dinámico))");
                 ExcelController.escribirEnHoja(id, caso, size + "", (endTime - startTime) );
                 acumularValores((endTime - startTime), String.valueOf(id));
                 break;
@@ -187,7 +192,7 @@ public class Main {
                 t = new Thread(new _3AmericanoRecursivoEstaticoThread(arregloA, arregloB));
                 t.run();
                 endTime = System.nanoTime();
-                System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (NaivKhan)");
+                System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (Americana recursivo (estático))");
                 ExcelController.escribirEnHoja(id, caso, size + "", (endTime - startTime) );
                 acumularValores((endTime - startTime), String.valueOf(id));
                 break;
@@ -196,7 +201,7 @@ public class Main {
                 t = new Thread(new _4AmericanoRecursivoDinamicoThread(convertArrayToArrayList(arregloA),convertArrayToArrayList(arregloB)));
                 t.run();
                 endTime = System.nanoTime();
-                System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (NaivLoopUnrollingTwo)");
+                System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (Americana recursivo (dinámico))");
                 ExcelController.escribirEnHoja(id, caso, size + "", (endTime - startTime) );
                 acumularValores((endTime - startTime), String.valueOf(id));
                 break;
@@ -205,7 +210,7 @@ public class Main {
                 t = new Thread(new _5InglesIterativoEstaticoThread(arregloA, arregloB));
                 t.run();
                 endTime = System.nanoTime();
-                System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (NaivLoopUnrollingThree)");
+                System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (Inglesa iterativo (estático))");
                 ExcelController.escribirEnHoja(id, caso, size + "", (endTime - startTime) );
                 acumularValores((endTime - startTime), String.valueOf(id));
                 break;
@@ -214,7 +219,7 @@ public class Main {
                 t = new Thread(new _6InglesIterativoDinamicoThread(convertArrayToArrayList(arregloA),convertArrayToArrayList(arregloB)));
                 t.run();
                 endTime = System.nanoTime();
-                System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (NaivLoopUnrollingFour)");
+                System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (Inglesa iterativo (dinámico))");
                 ExcelController.escribirEnHoja(id, caso, size + "", (endTime - startTime) );
                 acumularValores((endTime - startTime), String.valueOf(id));
                 break;
@@ -223,7 +228,7 @@ public class Main {
                 t = new Thread(new _7InglesRecursivoEstaticoThread(arregloA, arregloB));
                 t.run();
                 endTime = System.nanoTime();
-                System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (WinogradOriginal)");
+                System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (Inglesa recursivo (estático))");
                 ExcelController.escribirEnHoja(id, caso, size + "", (endTime - startTime) );
                 acumularValores((endTime - startTime), String.valueOf(id));
                 break;
@@ -232,7 +237,7 @@ public class Main {
                 t = new Thread(new _8InglesRecursivoDinamicoThread(convertArrayToArrayList(arregloA),convertArrayToArrayList(arregloB)));
                 t.run();
                 endTime = System.nanoTime();
-                System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (WinogradScaled)");
+                System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (Inglesa recursivo (dinámico))");
                 ExcelController.escribirEnHoja(id, caso, size + "", (endTime - startTime));
                 acumularValores((endTime - startTime), String.valueOf(id));
                 break;
@@ -241,7 +246,7 @@ public class Main {
                 t = new Thread(new _9RusaIEstaticaThread(arregloA, arregloB));
                 t.run();
                 endTime = System.nanoTime();
-                System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (StrassenNaiv)");
+                System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (Rusa (estático))");
                 ExcelController.escribirEnHoja(id, caso, size + "", (endTime - startTime) );
                 acumularValores((endTime - startTime), String.valueOf(id));
                 break;
@@ -250,7 +255,7 @@ public class Main {
                 t = new Thread(new _10HinduEstaticoThread(arregloA, arregloB));
                 t.run();
                 endTime = System.nanoTime();
-                System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (StrassenWinograd)");
+                System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (Hindú (estático))");
                 ExcelController.escribirEnHoja(id, caso, size + "", (endTime - startTime) );
                 acumularValores((endTime - startTime), String.valueOf(id));
                 break;
@@ -259,7 +264,7 @@ public class Main {
                 t = new Thread(new _11EgipciaEstaticoThread(arregloA, arregloB));
                 t.run();
                 endTime = System.nanoTime();
-                System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (V1_SequentialBlock)");
+                System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (Egipcia (estático))");
                 ExcelController.escribirEnHoja(id, caso, size + "", (endTime - startTime));
                 acumularValores((endTime - startTime), String.valueOf(id));
                 break;
@@ -268,34 +273,34 @@ public class Main {
                 t = new Thread(new _12KratsubaEstaticoThread(arregloA, arregloB));
                 t.run();
                 endTime = System.nanoTime();
-                System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (V1_ParallelBlock)");
+                System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (Algoritmo de Karatsuba (estático))");
                 ExcelController.escribirEnHoja(id, caso, size + "", (endTime - startTime));
                 acumularValores((endTime - startTime), String.valueOf(id));
                 break;
             case 13:
                 startTime = System.nanoTime();
-                t = new Thread(new _13RepresentadaPorCadenasThread(convertirArregloBigIntegerAString(arregloA), convertirArregloBigIntegerAString(arregloB)));
+                t = new Thread((Runnable) new _13RepresentadaPorCadenasThread(convertBigIntegerToStringArray(arregloA), convertBigIntegerToStringArray(arregloB)));
                 t.run();
                 endTime = System.nanoTime();
-                System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (V2_SequentialBlock)");
+                System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (Multiplicación representada con cadenas)");
                 ExcelController.escribirEnHoja(id, caso, size + "", (endTime - startTime) );
                 acumularValores((endTime - startTime), String.valueOf(id));
                 break;
             case 14:
                 startTime = System.nanoTime();
-                t = new Thread(new _14DivideyVenceras1Thread(arregloA, arregloB));
+                t = new Thread(new _14DivideyVenceras1Thread(convertArrayToBigInteger(arregloA), convertArrayToBigInteger(arregloB)));
                 t.run();
                 endTime = System.nanoTime();
-                System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (V2_ParallelBlock)");
+                System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (Divide y vencerás 1 (estático))");
                 ExcelController.escribirEnHoja(id, caso, size + "", (endTime - startTime));
                 acumularValores((endTime - startTime), String.valueOf(id));
                 break;
             case 15:
                 startTime = System.nanoTime();
-                t = new Thread(new _15DivideyVenceras2Thread(arregloA, arregloB));
+                t = new Thread(new _15DivideyVenceras2Thread(convertArrayToBigInteger(arregloA), convertArrayToBigInteger(arregloB)));
                 t.run();
                 endTime = System.nanoTime();
-                System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (V3_SequentialBlock)");
+                System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (Divide y vencerás 2 (estático))");
                 ExcelController.escribirEnHoja(id, caso, size + "", (endTime - startTime) );
                 acumularValores((endTime - startTime), String.valueOf(id));
                 break;
@@ -303,11 +308,22 @@ public class Main {
 
     }
 
-    public static String convertirArregloBigIntegerAString(BigInteger[] arreglo) {
-        return Arrays.stream(arreglo)
-                .map(BigInteger::toString)
-                .map(s -> s.replaceAll("[^0-9]", ""))  // Eliminar caracteres no numéricos
-                .collect(Collectors.joining(" "));
+    public static String[] convertBigIntegerToStringArray(BigInteger[] arreglo) {
+        String[] strings = new String[arreglo.length];
+
+        for (int i = 0; i < arreglo.length; i++) {
+            strings[i] = arreglo[i].toString();
+        }
+
+        return strings;
+    }
+
+    public static BigInteger convertArrayToBigInteger(BigInteger[] array) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (BigInteger element : array) {
+            stringBuilder.append(element.toString());
+        }
+        return new BigInteger(stringBuilder.toString());
     }
 
     public static ArrayList<BigInteger> convertArrayToArrayList(BigInteger[] array) {
@@ -318,35 +334,8 @@ public class Main {
         return arrayList;
     }
 
-    public static int[][] convertirMatrizBigIntegerAEntera(BigInteger[][] matrizBigInteger) {
-        int filas = matrizBigInteger.length;
-        int columnas = matrizBigInteger[0].length;
-        int[][] matrizEntera = new int[filas][columnas];
-
-        for (int i = 0; i < filas; i++) {
-            for (int j = 0; j < columnas; j++) {
-                matrizEntera[i][j] = matrizBigInteger[i][j].intValue();
-            }
-        }
-
-        return matrizEntera;
-    }
-    public static String matrizString(int[][] matriz) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < matriz.length; i++) {
-            for (int j = 0; j < matriz[i].length; j++) {
-                sb.append(matriz[i][j]).append(" ");
-            }
-            sb.append("\n");
-        }
-        String matrizStr = sb.toString();
-        return matrizStr;
-    }
-
-
-
     private static void guardarPromedioTiempoEjecucion(int id, int caso, double averageTime) {
-        if (caso == 12) {
+        if (caso == 8) {
             File file = new File("assets/promedio/promedio_times" + id + ".txt");
             if (!file.exists()) {
                 FileWriter writer = null;
@@ -371,52 +360,22 @@ public class Main {
         }
     }
 
-    public static void escribirArchivoTxt(String matrizA, String matrizB) {
-        File file = new File("matricesGeneradas.txt");
 
-        // Verificar si el archivo ya existe
-        if (file.exists()) {
-            try {
-                // Crear un nuevo archivo
-                FileWriter writer = new FileWriter(file);
-                writer.write("MatrizA:\n" + "{\n" + matrizA + "}" + "\n" + "\n" + "MatrizB:\n" + "{\n" + matrizB + "}\n\n"/*+"MatrizC:\n"+"{\n"+matrizC+"}\n\n"*/);
-                writer.close();
-                //System.out.println("El archivo ha sido creado");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            System.out.println("El archivo no existe");
-        }
-    }
-
-    public static BigInteger[] generateRandomBigIntegerArray(int rows, int columns) {
+    public static BigInteger[] generateRandomBigIntegerArray(int rows) {
         // Create a new one-dimensional array of BigInteger objects of size rows x columns.
-        BigInteger[] array = new BigInteger[rows * columns];
+        BigInteger[] array = new BigInteger[rows];
 
         // Create a new Random object to generate random values.
         Random random = new Random();
 
         // Iterate over each element of the array and assign a random BigInteger value between 1000 and 9000.
         for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
                 BigInteger value = BigInteger.valueOf(random.nextInt(8001) + 1000);
-                array[i * columns + j] = value;
-            }
+                array[i] = value;
         }
 
         // Return the array with random values.
         return array;
-    }
-
-
-    public static void imprimirMatriz(double[][] matriz) {
-        for (double[] fila : matriz) {
-            for (double d : fila) {
-                System.out.printf("%.1f\t", d);
-            }
-            System.out.println();
-        }
     }
 
     public static void guardarValoresFinales() throws IOException {
@@ -538,7 +497,9 @@ public class Main {
         }
 
         // Formatear el resultado con dos decimales
-        DecimalFormat df = new DecimalFormat("#.##");
+
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+        DecimalFormat df = new DecimalFormat("#.##", symbols);
         return count > 0 ? Double.parseDouble(df.format(sum / count)) : 0;
     }
 
@@ -559,7 +520,5 @@ public class Main {
                 file.delete();
             }
         }
-
-
     }
 }

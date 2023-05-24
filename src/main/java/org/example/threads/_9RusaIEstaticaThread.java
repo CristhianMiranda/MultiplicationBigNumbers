@@ -7,11 +7,11 @@ import java.util.ArrayList;
 
 public class _9RusaIEstaticaThread implements Runnable{
 
-    private BigInteger num1;
+    private BigInteger[] num1;
 
-    private BigInteger num2;
+    private BigInteger[] num2;
 
-    public _9RusaIEstaticaThread(BigInteger num1, BigInteger num2) {
+    public _9RusaIEstaticaThread(BigInteger[] num1, BigInteger[] num2) {
         this.num1 = num1;
         this.num2 = num2;
     }

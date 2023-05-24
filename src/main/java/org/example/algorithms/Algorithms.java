@@ -37,7 +37,7 @@ public class Algorithms {
         _8InglesRecursivoDinamico.multiplicarArrayListAmericanoRecursivo(arrayList1,arrayList2);
     }
 
-    public static void rusoEstatico(BigInteger num1, BigInteger num2){
+    public static void rusoEstatico(BigInteger[] num1, BigInteger[] num2){
         _9RusaIEstatica.rusoEstatico(num1,num2);
     }
 

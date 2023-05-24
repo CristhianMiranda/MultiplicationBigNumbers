@@ -45,7 +45,7 @@ public class Algorithms {
         _10HinduEstatico.induEstatico(arr1,arr2);
     }
 
-    public static void egipcioEstatico(BigInteger num1, BigInteger num2){
+    public static void egipcioEstatico(BigInteger[] num1, BigInteger[] num2){
         _11EgipciaEstatico.multiplicacionEgipcia(num1,num2);
     }
 

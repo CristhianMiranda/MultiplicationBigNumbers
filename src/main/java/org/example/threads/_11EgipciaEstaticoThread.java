@@ -6,11 +6,11 @@ import java.math.BigInteger;
 
 public class _11EgipciaEstaticoThread implements Runnable{
 
-    private BigInteger num1;
+    private BigInteger[] num1;
 
-    private BigInteger num2;
+    private BigInteger[] num2;
 
-    public _11EgipciaEstaticoThread(BigInteger num1, BigInteger num2) {
+    public _11EgipciaEstaticoThread(BigInteger[] num1, BigInteger[] num2) {
         this.num1 = num1;
         this.num2 = num2;
     }

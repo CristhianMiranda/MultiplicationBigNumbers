@@ -58,11 +58,11 @@ public class Algorithms {
         _13RepresentadaPorCadenas.representadaPorCadenas(num1,num2);
     }
 
-    public static void divideVenceras1(BigInteger num1, BigInteger num2){
-        _14DivideyVenceras1.divideyVenceras1(num1,num2);
+    public static void divideVenceras1(int[] num1, int[] num2, int n){
+        _14DivideyVenceras1.divideyVenceras1(num1,num2, n);
     }
 
-    public static void divideVenceras2(BigInteger num1, BigInteger num2){
+    public static void divideVenceras2(int[] num1, int[] num2){
         _15DivideyVenceras2.divideyVenceras2(num1,num2);
 
     }

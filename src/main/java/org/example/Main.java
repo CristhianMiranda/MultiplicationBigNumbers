@@ -22,7 +22,7 @@ public class Main {
 
     public static void calculoTiempoEjecucionMultiplicacion() throws InterruptedException {
 
-        int tamano = 1;
+        int tamano = 100;
         eliminarArchivo();
 
         for (int i = 1; i <= 8; i++) {
@@ -344,7 +344,7 @@ public class Main {
                 break;
             case 13:
                 startTime = System.nanoTime();
-                t = new Thread((Runnable) new _13RepresentadaPorCadenasThread(convertBigIntegerToStringArray(arregloA), convertBigIntegerToStringArray(arregloB)));
+                t = new Thread(new _13RepresentadaPorCadenasThread(convertBigIntegerToStringArray(arregloA), convertBigIntegerToStringArray(arregloB)));
                 t.run();
                 endTime = System.nanoTime();
                 System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (Multiplicación representada con cadenas)");
@@ -353,8 +353,18 @@ public class Main {
                 break;
             case 14:
                 startTime = System.nanoTime();
-                t = new Thread(new _14DivideyVenceras1Thread(convertArrayToBigInteger(arregloA), convertArrayToBigInteger(arregloB)));
-                t.run();
+                /*t = new Thread(new _14DivideyVenceras1Thread(convertBigIntegerArrayToIntArray(arregloA), convertBigIntegerArrayToIntArray(arregloB), arregloA.length));
+                t.run();*/
+                t = new Thread(() -> {
+                    try {
+                        increaseStackSize();
+                        new _14DivideyVenceras1Thread(convertBigIntegerArrayToIntArray(arregloA), convertBigIntegerArrayToIntArray(arregloB), arregloA.length);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+                t.start();
+                t.join();
                 endTime = System.nanoTime();
                 System.out.println("Tiempo de respuesta en nanosegundos: " + (endTime - startTime) + " (Divide y vencerás 1 (estático))");
                 ExcelController.escribirEnHoja(id, caso, size + "", (endTime - startTime));
@@ -362,18 +372,17 @@ public class Main {
                 break;
             case 15:
                 startTime = System.nanoTime();
-                /*t = new Thread(new _15DivideyVenceras2Thread(convertArrayToBigInteger(arregloA), convertArrayToBigInteger(arregloB)));
+                /*t = new Thread(new _15DivideyVenceras2Thread(convertBigIntegerArrayToIntArray(arregloA), convertBigIntegerArrayToIntArray(arregloB)));
                 t.run();*/
 
                 t = new Thread(() -> {
                     try {
                         increaseStackSize();
-                        new _15DivideyVenceras2Thread(convertArrayToBigInteger(arregloA), convertArrayToBigInteger(arregloB));
+                        new _15DivideyVenceras2Thread(convertBigIntegerArrayToIntArray(arregloA), convertBigIntegerArrayToIntArray(arregloB));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 });
-
                 t.start();
                 t.join();
                 endTime = System.nanoTime();
@@ -383,6 +392,16 @@ public class Main {
                 break;
         }
 
+    }
+
+    public static int[] convertBigIntegerArrayToIntArray(BigInteger[] bigIntegerArray) {
+        int[] intArray = new int[bigIntegerArray.length];
+
+        for (int i = 0; i < bigIntegerArray.length; i++) {
+            intArray[i] = bigIntegerArray[i].intValue();
+        }
+
+        return intArray;
     }
 
     public static String[] convertBigIntegerToStringArray(BigInteger[] arreglo) {

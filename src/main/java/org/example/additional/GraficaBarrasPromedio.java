@@ -102,6 +102,8 @@ public class GraficaBarrasPromedio extends JFrame {
                 case 14:
                     dataset.addValue(promedios[i], "Algoritmos", "Divide y Venceras 1");
                     break;
+                case 15:
+                    dataset.addValue(promedios[i], "Algoritmos", "Divide y Venceras 2");
             }
 
         }
